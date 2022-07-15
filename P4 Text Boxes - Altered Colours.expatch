@@ -1,0 +1,35 @@
+// =============
+// Configuration
+// =============
+// You can change the rgb values to change the colours of the text box elements.
+// Note that due to some filtering (not sure on exact details) some arbitrary numbers are added to the ones defined here to produce the desired colours.
+// If a value goes over 255 the patch will not apply, if that happens just make sure all values are between 0 and 255
+const boxR = 66
+const boxG = 60
+const boxB = 43
+
+const stripeR = 255
+const stripeG = 161
+const stripeB = 7
+
+// =======
+// Patches
+// =======
+var dummy(0) // Does nothing but is needed since constants only work if there's at least one variable (this is a bug in Inaba 2.0)
+[patch Change Colours]
+pattern = 89 87 ?? ?? ?? ?? 8B 06 89 45 ??
+order = before
+cmp edi, 4
+jne endHook
+// Set the colours (some seemingly arbitrary values needed to be added to the rgb because for some reason they turn out a bit off, maybe there's some filtering happening)
+push ebx
+mov ebx, [eax]
+mov byte [ebx + 0x24], {boxR} + 6
+mov byte [ebx + 0x25], {boxG} + 6
+mov byte [ebx + 0x26], {boxB} + 8
+
+mov byte [ebx + 0xC], {stripeR}
+mov byte [ebx + 0xD], {stripeG} - 3
+mov byte [ebx + 0xE], {stripeB} + 11
+pop ebx
+label endHook

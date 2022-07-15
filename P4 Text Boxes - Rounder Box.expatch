@@ -1,0 +1,16 @@
+const cornerRadius = 7.5f // The radius of the box corners (originally 4.0f)
+
+[patch Rounder Box]
+pattern = C7 04 24 00 00 80 40 0F 57 D2
+order = only
+mov dword [esp], {cornerRadius}
+
+[patch Rounder Box Opening]
+pattern = C7 04 24 00 00 80 40 0F 57 D2
+order = only
+mov dword [esp], {cornerRadius}
+
+[patch Rounder Box Closing]
+pattern = C7 04 24 00 00 80 40 0F 57 D2
+order = only
+mov dword [esp], {cornerRadius}

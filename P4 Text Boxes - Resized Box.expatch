@@ -1,0 +1,145 @@
+// =============
+// Configuration
+// =============
+// If you want to revert any of these to their original states just change the value to the one listed in the comment
+// You could also just change them to fit your liking
+const boxStart = 0x3f760000 // The position of the start of the brown box (originally 0x3f800000)
+const boxEnd = 0x490 // The position of the end of the brown box (originally 0x390)
+const boxBottom = 0x78 // The position of the bottom of the brown box (originally 0x80)
+const orangeEnd = 0x3A0 // The position of the end of the orange stripe (originally 0x38A)
+const orangeStart = 0x40 // The position of the start of the orange strip (originally 0x40, unchanged by default but you could if you wanted to)
+const orangeHeight = 0x3bA // The height of the orange stripe (originally 0x38A)
+const orangeVertical = 0x03F700000 // The vertical position of the orange stripe (originally 0x3F800000)
+const msgStart = 0x0480 // The horizontal start position of the text (originally 0x3E0)
+const msgStartOffset = 0xA0 // The offset of the horizontal start position of the text
+
+// =======
+// Patches
+// =======
+var dummy(0) // Does nothing but is needed since constants only work if there's at least one variable (this is a bug in Inaba 2.0)
+[patch Box Start]
+pattern = C7 04 24 00 00 80 3F 51 0F B6 C8
+order = only
+mov dword [esp], {boxStart}
+
+[patch Box Start Opening]
+pattern = C7 44 24 ?? 00 00 80 3F F3 0F 5C C2
+order = after
+mov dword [esp+08], {boxStart}
+mov dword [esp+04], {boxStart}
+
+[patch Box Start Closing]
+pattern = C7 44 24 ?? 00 00 80 3F 89 3C 24 6A 40
+order = after
+mov dword [esp+08], {boxStart}
+mov dword [esp+04], {boxStart}
+
+[patch Box End]
+pattern = B9 90 03 00 00
+offset = 5
+order = before
+mov ecx, {boxEnd}
+
+[patch Box End & Bottom Opening]
+pattern = 68 80 00 00 00 68 90 03 00 00 50
+order = only
+push 0x80 // The original box bottom value 
+// push {boxBottom}
+push {boxEnd}
+
+[patch Box End & Bottom Closing]
+pattern = 68 80 00 00 00 68 90 03 00 00 0F B6 C8
+order = only
+push {boxBottom}
+push {boxEnd}
+
+[patch Extend Orange]
+pattern = 0F B6 C1 B9 8A 03 00 00
+order = after
+mov ecx, {orangeEnd}
+
+[patch Extend Orange Opening]
+pattern = 68 8A 03 00 00 50 56 E8 ?? ?? ?? ?? F3 0F 10 25 ?? ?? ?? ??
+order = only
+push {orangeEnd}
+push eax
+push esi
+
+[patch Extend Orange Closing]
+pattern = 68 8A 03 00 00 50 56 E8 ?? ?? ?? ?? F3 0F 10 4B ??
+order = only
+push {orangeEnd}
+push eax
+push esi
+
+[patch Orange Height]
+pattern = 6A 40 68 8A 03 00 00 83 EC 08 C7 44 24 ?? 00 00 80 3F
+order = only
+push {orangeStart}
+push {orangeHeight}
+
+[patch Orange Vertical Position]
+pattern = C7 04 24 00 00 80 3F ?? ?? F3 0F
+order = before
+mov dword [esp + 4], {orangeVertical}
+
+[patch Orange Vertical Position Opening]
+pattern = 6A 40 68 8A 03 00 00 83 EC 08 F3 0F 2C D1
+order = only
+push {orangeStart}
+push {orangeHeight}
+
+//[patch Orange Height Opening]
+//pattern = C7 44 24 ?? 00 00 80 3F F3 0F 58 C9
+//order = after
+//mov dword [esp + 8], {orangeVertical} + 0x100000 // This puts it back to the original, not sure if it should just be unchanged or if it needs to be slightly more than normal
+
+[patch Orange Height Closing]
+pattern = 6A 40 68 8A 03 00 00 83 EC 08 68 80 00 00 00
+order = only
+push {orangeStart}
+push {orangeHeight}
+
+[patch Orange Vertical Position Closing]
+pattern = C7 44 24 ?? 00 00 80 3F F3 0F 58 CA
+order = after
+mov dword [esp + 8], {orangeVertical}
+
+[patch Box Bottom]
+//pattern = 51 C7 04 24 00 00 80 40 0F 57 D2
+pattern = 6A 04 51 0F B6 C8
+order = after
+mov edx, {boxBottom}
+
+[patch Move Message]
+var currentMessage(4) = 0
+pattern = E8 ?? ?? ?? ?? 83 C4 04 85 C0 7E ?? 8B 0E
+order = before
+
+push ecx
+push ebx
+mov dword ecx, [ecx + 0x2C] // Get the first line info
+// Check if the current message has already been offset
+mov ebx, [ecx + 0x1C] // Get the address of the current letter
+cmp ebx, [{currentMessage}]
+je skip
+
+// Update the current message
+mov dword [{currentMessage}], ebx
+pop ebx
+
+// Add the offset
+add word [ecx + 4], {msgStartOffset} // Set the start position of the first line
+
+// Go through subsequent lines doing the same
+label lineLoop
+mov dword ecx, [ecx + 0x28] // Get the next line info 
+test ecx, ecx 
+jz endLoop // Finish if there were no more lines
+add word [ecx + 4], {msgStartOffset} // Set the start position of the line
+jmp lineLoop
+
+label skip
+pop ebx
+label endLoop
+pop ecx

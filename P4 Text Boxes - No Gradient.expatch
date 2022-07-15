@@ -1,0 +1,17 @@
+[patch Remove Outline Gradient]
+pattern = F3 0F 58 C1 8B 48 ?? 8B 40 ??
+order = before
+add esp, 4 // pop 5 from the stack
+push 0
+
+[patch Remove Box Gradient]
+pattern = BA 80 00 00 00 6A 09
+order = only
+mov edx, 0x80 // original code
+push 0 // no gradient
+
+[patch Remove Transition Gradient]
+pattern = 0F B7 46 ?? 51 0F 5B C0
+order = before
+add esp, 4 // pop current gradient type from the stack
+push 0 // no gradient

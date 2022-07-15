@@ -1,0 +1,26 @@
+var yellowPtr = 0
+
+[patch Remove Outline]
+pattern = E8 ?? ?? ?? ?? A1 ?? ?? ?? ?? 83 C4 28 F3 0F 10 44 24 ?? F3 0F 10 4C 24 ?? F3 0F 58 C0
+order = only
+offset = -5
+mov edx, 0x84
+
+[patch Remove Outline Open Transition]
+pattern = 55 ?? ?? 56 B9 ?? ?? ?? ?? E8 ?? ?? ?? ?? E8 ?? ?? ?? ?? 8B 75 ?? 0F 57 D2 66 0F 6E 46 ??
+order = before
+cmp dword [{yellowPtr}], 0
+jne continueHook
+// Set the yellow pointer to the current eax
+mov dword [{yellowPtr}], eax
+label continueHook
+cmp dword [{yellowPtr}], eax
+// If the current colour is yellow return
+jne endHook
+ret
+label endHook
+
+[patch Remove Outline Close Transition]
+pattern = B9 46 00 00 00 E8 ?? ?? ?? ??
+order = only
+mov ecx, 0x46 // original code
