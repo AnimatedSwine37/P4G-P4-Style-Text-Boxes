@@ -4,6 +4,9 @@ You can use the [editor on GitHub](https://github.com/AnimatedSwine37/P4G-P4-Sty
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
+### Comparison
+{% include comparison.html %}
+
 ### Markdown
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for

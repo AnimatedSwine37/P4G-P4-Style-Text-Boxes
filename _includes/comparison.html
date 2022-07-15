@@ -1,0 +1,136 @@
+<script defer src="https://unpkg.com/img-comparison-slider@7/dist/index.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/img-comparison-slider@7/dist/styles.css" />
+
+<style>
+    .before,
+    .after {
+        margin: 0;
+    }
+
+    .before figcaption,
+    .after figcaption {
+        background: #fff;
+        border: 1px solid #c0c0c0;
+        border-radius: 12px;
+        color: #2e3452;
+        opacity: 0.8;
+        padding: 12px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        line-height: 100%;
+    }
+
+    .before figcaption {
+        left: 12px;
+    }
+
+    .after figcaption {
+        right: 12px;
+    }
+</style>
+<style class="darkreader darkreader--sync" media="screen"></style>
+
+<img-comparison-slider>
+    <figure slot="first" class="before" id="firstFigure">
+        <img width="100%" src="{{site.url}}/images/variants/full.jpg">
+        <figcaption>P4 Full</figcaption>
+    </figure>
+    <figure slot="second" class="after" id="secondFigure">
+        <img width="100%" src="{{site.url}}/images/variants/vanilla.jpg">
+        <figcaption>Vanilla</figcaption>
+    </figure>
+</img-comparison-slider>
+
+<form id="firstForm">
+    <input type="checkbox" name="hidden field" value="hidden field">
+    <label for="hidden field">Hidden Field Name</label>
+    <input type="checkbox" name="colours" value="colours">
+    <label for="colours">Altered Colours</label>
+    <input type="checkbox" name="gradient" value="gradient">
+    <label for="gradient">Removed Gradient</label>
+    <input type="checkbox" name="yellow" value="yellow">
+    <label for="yellow">Removed Yellow Outline</label>
+    <input type="checkbox" name="resized" value="resized">
+    <label for="resized">Resized Box</label>
+    <input type="checkbox" name="full" value="full" checked>
+    <label for="full">Full P4 Style</label>
+</form>
+
+<form id="secondForm">
+    <input type="checkbox" name="hidden field" value="hidden field">
+    <label for="hidden field">Hidden Field Name</label>
+    <input type="checkbox" name="colours" value="colours">
+    <label for="colours">Altered Colours</label>
+    <input type="checkbox" name="gradient" value="gradient">
+    <label for="gradient">Removed Gradient</label>
+    <input type="checkbox" name="yellow" value="yellow">
+    <label for="yellow">Removed Yellow Outline</label>
+    <input type="checkbox" name="resized" value="resized">
+    <label for="resized">Resized Box</label>
+    <input type="checkbox" name="full" value="full">
+    <label for="full">Full P4 Style</label>
+</form>
+
+<script>
+    // Manually made :(
+    let validFiles = ["colours gradient hidden field.jpg",
+        "colours gradient.jpg",
+        "colours hidden field.jpg",
+        "colours.jpg",
+        "full hidden field.jpg",
+        "full.jpg",
+        "gradient hidden field.jpg",
+        "gradient.jpg",
+        "hidden field resized.jpg",
+        "hidden field yellow.jpg",
+        "hidden field.jpg",
+        "resized.jpg",
+        "vanilla.jpg",
+        "yellow.jpg"];
+
+    function addChangeListeners(form, figure) {
+        let formInputs = form.querySelectorAll('input');
+        formInputs.forEach(input => {
+            input.addEventListener('change', function () {
+                let value = this.value;
+                let checked = this.checked;
+                let checkedInputs = form.querySelectorAll('input:checked');
+                let checkedValues = [];
+                checkedInputs.forEach(input => {
+                    checkedValues.push(input.value);
+                })
+
+                formInputs.forEach(input => {
+                    let nameList = [...checkedValues];
+                    if (!nameList.includes(input.value))
+                        nameList.push(input.value);
+                    nameList.sort();
+                    let name = nameList.join(" ") + ".jpg";
+                    if (validFiles.includes(name))
+                        input.disabled = false;
+                    else
+                        input.disabled = true;
+                });
+                checkedValues.sort();
+                console.log(checkedValues);
+                let name = checkedValues.join(" ") + ".jpg";
+                if(checkedValues.length == 0) {
+                    name = "Vanilla.jpg";
+                }
+                console.log(figure.childNodes);
+                figure.childNodes[1].src = `{{site.url}}/images/variants/${name}`;
+            });
+        });
+    }
+
+    let firstForm = document.getElementById('firstForm');
+    let firstFigure = document.getElementById('firstFigure');
+    let secondForm = document.getElementById('secondForm');
+    let secondFigure = document.getElementById('secondFigure');
+    addChangeListeners(firstForm, firstFigure);
+    addChangeListeners(secondForm, secondFigure);
+
+
+
+</script>
