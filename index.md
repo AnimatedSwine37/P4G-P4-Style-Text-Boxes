@@ -1,40 +1,21 @@
 ## P4 Style Text Boxes
 
-You can use the [editor on GitHub](https://github.com/AnimatedSwine37/P4G-P4-Style-Text-Boxes/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+### Details
+Makes the text boxes in Persona 4 Golden PC look more like those in Persona 4. 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+To download the mod and for more details check out its Gamebanana page.
+
+### Modularity
+This mod is modular and as such certain parts of it can be used or not to your liking, to give an idea of how certain combinations will look you can use the comparison tool below. 
+
+This does not contain all possible combinations as I didn't want to take 64+ screenshots, however it does contain some that I think would be common.
+
+These comparisons also include options for my other mod, Hidden Field Names, which I think complements this nicely (and also works nicely on its own).
 
 ### Comparison
 {% include comparison.html %}
 
-### Markdown
+### Support Me
+I have worked very hard to make this as close as possible to Persona 4 so if you particularly appreciate this or any of my mods you can [buy me a ko-fi](https://ko-fi.com/animatedswine) (although just looking at and downloading my mods is already very helpful).
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/AnimatedSwine37/P4G-P4-Style-Text-Boxes/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Also, if this is somehow the first mod of mine you've seen, I've made many others that you can check out at my [Gamebanana profile](https://gamebanana.com/members/submissions/mods/1742760). You can also follow me on [Twitter](https://twitter.com/AnimatedSwine37) where I post about all my new releases as well as some sneak peaks of upcoming mods.
