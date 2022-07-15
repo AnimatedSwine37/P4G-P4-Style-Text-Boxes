@@ -60,6 +60,8 @@
     <label for="resized">Resized Box</label>
     <input type="checkbox" name="full" value="full" checked>
     <label for="full">Full P4 Style</label>
+    <input type="checkbox" name="persona 4" value="persona 4">
+    <label for="persona 4">Persona 4</label>
 </form>
 
 <h4 style="margin: 0px;">Right Side</h4>
@@ -76,6 +78,8 @@
     <label for="resized">Resized Box</label>
     <input type="checkbox" name="full" value="full">
     <label for="full">Full P4 Style</label>
+    <input type="checkbox" name="persona 4" value="persona 4">
+    <label for="persona 4">Persona 4</label>
 </form>
 
 <script>
@@ -93,10 +97,10 @@
         "hidden field.jpg",
         "resized.jpg",
         "vanilla.jpg",
-        "yellow.jpg"];
+        "yellow.jpg",
+        "persona 4.jpg"];
 
     function setCheckBoxes(form, figure) {
-        console.log("Set the check boxes")
         let checkedInputs = form.querySelectorAll('input:checked');
         let labels = form.querySelectorAll('label');
         let checkedValues = [];

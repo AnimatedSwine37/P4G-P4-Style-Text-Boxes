@@ -8,7 +8,8 @@ To download the mod and for more details check out its Gamebanana page.
 ### Modularity
 This mod is modular and as such certain parts of it can be used or not to your liking, to give an idea of how certain combinations will look you can use the comparison tool below. 
 
-This does not contain all possible combinations as I didn't want to take 64+ screenshots, however it does contain some that I think would be common.
+This does not contain all possible combinations as I didn't want to take 64+ screenshots, however it does contain some that I think would be common. 
+Also, the Persona 4 screenshot is using a widescreen hack to make it closer to P4G PC (this is what I used for reference).
 
 These comparisons also include options for my other mod, Hidden Field Names, which I think complements this nicely (and also works nicely on its own).
 
