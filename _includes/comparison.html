@@ -28,6 +28,10 @@
     .after figcaption {
         right: 12px;
     }
+
+    figcaption {
+        text-align: center;
+    }
 </style>
 <style class="darkreader darkreader--sync" media="screen"></style>
 
@@ -96,9 +100,15 @@
                 let value = this.value;
                 let checked = this.checked;
                 let checkedInputs = form.querySelectorAll('input:checked');
+                let labels = form.querySelectorAll('label');
                 let checkedValues = [];
+                let checkedNames = [];
                 checkedInputs.forEach(input => {
                     checkedValues.push(input.value);
+                    labels.forEach(label => {
+                        if(label.htmlFor == input.value)
+                            checkedNames.push(label.innerText);
+                    });
                 })
 
                 formInputs.forEach(input => {
@@ -113,13 +123,15 @@
                         input.disabled = true;
                 });
                 checkedValues.sort();
-                console.log(checkedValues);
+                checkedNames.sort();
                 let name = checkedValues.join(" ") + ".jpg";
+                let displayName = checkedNames.join("\n+\n");
                 if(checkedValues.length == 0) {
-                    name = "Vanilla.jpg";
+                    name = "vanilla.jpg";
+                    displayName = "Vanilla";
                 }
-                console.log(figure.childNodes);
                 figure.childNodes[1].src = `{{site.url}}/images/variants/${name}`;
+                figure.childNodes[3].innerText = displayName;
             });
         });
     }
