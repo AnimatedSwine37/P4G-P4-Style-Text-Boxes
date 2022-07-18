@@ -111,6 +111,17 @@ pattern = 6A 04 51 0F B6 C8
 order = after
 mov edx, {boxBottom}
 
+[patch Is Dungeon Message]
+var isDngMsg(1) = 0
+pattern = 55 ?? ?? 51 53 56 ?? ?? B9 ?? ?? ?? ?? 57 ?? ?? E8 ?? ?? ?? ?? A1 ?? ?? ?? ?? 6A 30 8B 48
+order = before
+mov byte [{isDngMsg}], 1
+
+[patch Is Regular Message]
+pattern = A1 ?? ?? ?? ?? 8B B0 ?? ?? ?? ?? 85 F6 78 ?? 51
+order = before
+mov byte [{isDngMsg}], 0
+
 [patch Move Message]
 var currentMessage(4) = 0
 pattern = E8 ?? ?? ?? ?? 83 C4 04 85 C0 7E ?? 8B 0E
@@ -122,6 +133,9 @@ mov dword ecx, [ecx + 0x2C] // Get the first line info
 // Check if the current message has already been offset
 mov ebx, [ecx + 0x1C] // Get the address of the current letter
 cmp ebx, [{currentMessage}]
+je skip
+// If it's a dungeon message don't touch the position
+cmp byte [{isDngMsg}], 1
 je skip
 
 // Update the current message
