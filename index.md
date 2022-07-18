@@ -14,7 +14,7 @@ Also, the Persona 4 screenshot is using a widescreen hack to make it closer to P
 These comparisons also include options for my other mod, [Hidden Field Names](https://gamebanana.com/mods/389830), which I think complements this nicely (and also works nicely on its own).
 
 ### Comparison
-Note that if a checkbox is greyed out it means there's no screenshot of your currently selected modules with it, try disabling some of them to enable it.
+Note that if a checkbox is greyed out it means there's no screenshot of your currently selected modules with it, try disabling some of them to enable it. Note that this doesn't mean you can't use those particular modules in combination (you can use whatever combinations you want) it just means that I didn't make a screenshot of that combination so you'll need to use your imagination a little.
 {% include comparison.html %}
 
 ### Support Me
